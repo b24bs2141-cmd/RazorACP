@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RazorACP — AI Agentic Payment Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .product-card {
+            border: 2px solid #eee;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+
+        .product-card:hover {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .product-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .product-rating {
+            font-size: 12px;
+            color: #f59e0b;
+        }
+
+        .log-container {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .log-timestamp {
+            color: #888;
+            flex-shrink: 0;
+        }
+
+        .log-action {
+            color: #00ff00;
+            font-weight: 600;
+        }
+
+        .log-error {
+            color: #ff6b6b;
+        }
+
+        .log-success {
+            color: #51cf66;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            margin: 0 2px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: loading 1.4s infinite;
+        }
+
+        @keyframes loading {
+            0%, 80%, 100% { opacity: 0.3; }
+            40% { opacity: 1; }
+        }
+
+        .ai-thinking {
+            color: #667eea;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 RazorACP — AI Agentic Payment Demo</h1>
+            <p>India's First ACP-Compliant Autonomous Shopping System | Powered by Gemini 3.6 Flash + Razorpay</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left Panel: User Input & AI Control -->
+            <div class="card">
+                <h2>🎯 Shopping Goal</h2>
+                
+                <div class="input-group">
+                    <label>What would you like to buy?</label>
+                    <textarea id="goal" placeholder="e.g., Buy a high-performance phone under ₹50,000" rows="3"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Budget (₹)</label>
+                    <input type="number" id="budget" placeholder="100000" value="100000">
+                </div>
+
+                <button onclick="startAgent()" id="startBtn">🚀 Start Autonomous Agent</button>
+
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-box">
+                        <div class="stat-label">Status</div>
+                        <div id="status" class="status-badge status-pending">Ready</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">AI Decision</div>
+                        <div id="aiDecision" style="font-size: 12px; color: #666;">Waiting...</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Total Cost</div>
+                        <div class="stat-value" id="totalCost">₹0</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px; background: #f0f4ff; border: 1px solid #e0e7ff;">
+                    <h2 style="font-size: 14px; margin-bottom: 10px;">ℹ️ How It Works</h2>
+                    <ol style="margin-left: 20px; color: #666; font-size: 12px; line-height: 1.8;">
+                        <li>Agent discovers products from merchant</li>
+                        <li>Gemini AI analyzes catalog against your goal</li>
+                        <li>Agent creates checkout session</li>
+                        <li>PSP issues Shared Payment Token (SPT)</li>
+                        <li>Payment completed via Razorpay</li>
+                        <li>Audit trail logs every action</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Right Panel: Products & Audit Log -->
+            <div class="card">
+                <h2>📦 Available Products</h2>
+                <div id="productsContainer" class="products-grid" style="margin-bottom: 15px;">
+                    <div style="text-align: center; color: #999; padding: 40px 20px;">Loading products...</div>
+                </div>
+
+                <div style="border-top: 1px solid #eee; padding-top: 15px;">
+                    <h2 style="margin-bottom: 10px;">📋 Audit Trail</h2>
+                    <div class="log-container" id="auditLog">
+                        <div class="log-entry">
+                            <span class="log-timestamp">[INIT]</span>
+                            <span class="log-action">System ready. Load products to begin.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full-width Stats Footer -->
+        <div class="card full-width">
+            <h2>📊 Session Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Products Loaded</div>
+                    <div class="stat-value" id="productsCount">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Audit Entries</div>
+                    <div class="stat-value" id="auditCount">1</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Order ID</div>
+                    <div class="stat-value" id="orderId" style="font-size: 14px;">—</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MERCHANT_URL = 'http://localhost:8000';
+        const PSP_URL = 'http://localhost:8001';
+        const DECIDE_URL = 'http://localhost:8002';
+
+        let products = [];
+        let auditEntries = [];
+
+        // Log helper
+        function log(action, details, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = { timestamp, action, details, type };
+            auditEntries.push(entry);
+
+            const logEl = document.getElementById('auditLog');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry`;
+            
+            let actionClass = 'log-action';
+            if (type === 'error') actionClass = 'log-error';
+            else if (type === 'success') actionClass = 'log-success';
+
+            logEntry.innerHTML = `
+                <span class="log-timestamp">[${timestamp}]</span>
+                <span class="${actionClass}">${action}:</span>
+                <span>${details}</span>
+            `;
+            logEl.appendChild(logEntry);
+            logEl.scrollTop = logEl.scrollHeight;
+
+            document.getElementById('auditCount').textContent = auditEntries.length;
+        }
+
+        // Load products
+        async function loadProducts() {
+            try {
+                log('FETCH_PRODUCTS', 'Requesting product catalog from merchant...', 'info');
+                const response = await fetch(`${MERCHANT_URL}/products`);
+                const data = await response.json();
+                products = data;
+                
+                log('FETCH_SUCCESS', `Loaded ${data.length} products`, 'success');
+                document.getElementById('productsCount').textContent = data.length;
+
+                // Render products
+                const container = document.getElementById('productsContainer');
+                container.innerHTML = data.map(p => `
+                    <div class="product-card" onclick="selectProduct('${p.id}')">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">₹${p.price.toLocaleString()}</div>
+                        <div class="product-rating">${p.rating}⭐ (${p.reviews_count})</div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                log('FETCH_ERROR', `Failed to load products: ${e.message}`, 'error');
+            }
+        }
+
+        function selectProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
+            event.target.closest('.product-card').classList.add('selected');
+
+            document.getElementById('totalCost').textContent = `₹${product.price.toLocaleString()}`;
+        }
+
+        // Start agent
+        async function startAgent() {
+            const goal = document.getElementById('goal').value;
+            const budget = parseInt(document.getElementById('budget').value);
+
+            if (!goal) {
+                alert('Please enter a shopping goal');
+                return;
+            }
+
+            const btn = document.getElementById('startBtn');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Agent Running<span class="loading"></span><span class="loading"></span><span class="loading"></span>';
+
+            document.getElementById('status').textContent = 'Running';
+            document.getElementById('status').className = 'status-badge status-pending';
+
+            log('AGENT_START', `Goal: "${goal}", Budget: ₹${budget}`, 'info');
+
+            try {
+                // Step 1: AI Decision
+                log('AI_DECISION_START', 'Asking Gemini to analyze products and make decision...', 'info');
+                
+                const decideResponse = await fetch(`${DECIDE_URL}/decide`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        goal,
+                        budget,
+                        products: products.map(p => ({
+                            id: p.id,
+                            name: p.name,
+                            price: p.price,
+                            description: p.description,
+                            rating: p.rating
+                        }))
+                    })
+                });
+
+                const decision = await decideResponse.json();
+                
+                log('AI_DECISION_MADE', `Selected: ${decision.product_id} (Confidence: ${decision.confidence})`, 'success');
+                document.getElementById('aiDecision').textContent = decision.reason;
+
+                // Step 2: Create Checkout
+                log('CHECKOUT_CREATE', 'Creating checkout session at merchant...', 'info');
+                
+                const checkoutResponse = await fetch(`${MERCHANT_URL}/checkouts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        buyer_agent_id: 'agent_gemini_3.6_flash',
+                        items: [{ product_id: decision.product_id, quantity: decision.quantity }]
+                    })
+                });
+
+                const checkout = await checkoutResponse.json();
+                log('CHECKOUT_SUCCESS', `Created checkout ${checkout.checkout_id} for ₹${checkout.total}`, 'success');
+                document.getElementById('totalCost').textContent = `₹${checkout.total.toLocaleString()}`;
+
+                // Step 3: Request SPT
+                log('SPT_REQUEST', 'Requesting Shared Payment Token from PSP...', 'info');
+                
+                const tokenResponse = await fetch(`${PSP_URL}/v1/tokens`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        buyer_agent_id: 'agent_gemini_3.6_flash',
+                        max_amount: checkout.total,
+                        currency: 'INR',
+                        merchant_id: checkout.merchant_id
+                    })
+                });
+
+                const token = await tokenResponse.json();
+                log('SPT_ISSUED', `Token issued, expires in 5 minutes`, 'success');
+
+                // Step 4: Complete Payment
+                log('PAYMENT_START', 'Completing payment with SPT...', 'info');
+                
+                const completeResponse = await fetch(`${MERCHANT_URL}/checkouts/${checkout.checkout_id}/complete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        shared_payment_token: token.shared_payment_token
+                    })
+                });
+
+                const payment = await completeResponse.json();
+                
+                log('PAYMENT_SUCCESS', `Order created: ${payment.razorpay_order_id}`, 'success');
+                document.getElementById('orderId').textContent = payment.razorpay_order_id;
+                document.getElementById('status').textContent = 'Completed';
+                document.getElementById('status').className = 'status-badge status-success';
+
+            } catch (e) {
+                log('ERROR', e.message, 'error');
+                document.getElementById('status').textContent = 'Failed';
+                document.getElementById('status').className = 'status-badge status-error';
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '🚀 Start Autonomous Agent';
+        }
+
+        // Initialize
+        loadProducts();
+    </script>
+</body>
+</html>
