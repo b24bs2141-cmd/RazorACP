@@ -1,0 +1,108 @@
+{
+  "products": [
+    {
+      "id": "prod_001",
+      "name": "Redmi Note 13 Pro",
+      "description": "6.67\" AMOLED, 120Hz, 5000mAh",
+      "category": "Electronics",
+      "price": 28999,
+      "currency": "INR",
+      "sku": "REDMI-NOTE-13-PRO",
+      "inventory": 150,
+      "image": "https://via.placeholder.com/300x300?text=Redmi+Note+13",
+      "rating": 4.5,
+      "reviews_count": 1250
+    },
+    {
+      "id": "prod_002",
+      "name": "Samsung Galaxy A15",
+      "description": "6.5\" FHD+, 50MP Camera, 5000mAh",
+      "category": "Electronics",
+      "price": 21999,
+      "currency": "INR",
+      "sku": "SAMSUNG-A15",
+      "inventory": 200,
+      "image": "https://via.placeholder.com/300x300?text=Samsung+A15",
+      "rating": 4.3,
+      "reviews_count": 890
+    },
+    {
+      "id": "prod_003",
+      "name": "OnePlus 12",
+      "description": "6.7\" AMOLED, Snapdragon 8 Gen 3",
+      "category": "Electronics",
+      "price": 39999,
+      "currency": "INR",
+      "sku": "ONEPLUS-12",
+      "inventory": 100,
+      "image": "https://via.placeholder.com/300x300?text=OnePlus+12",
+      "rating": 4.7,
+      "reviews_count": 2100
+    },
+    {
+      "id": "prod_004",
+      "name": "Apple AirPods Pro",
+      "description": "Active Noise Cancellation, Spatial Audio",
+      "category": "Electronics",
+      "price": 19999,
+      "currency": "INR",
+      "sku": "AIRPODS-PRO",
+      "inventory": 80,
+      "image": "https://via.placeholder.com/300x300?text=AirPods+Pro",
+      "rating": 4.8,
+      "reviews_count": 3500
+    },
+    {
+      "id": "prod_005",
+      "name": "Sony WH-1000XM5",
+      "description": "Wireless Headphones, 30hr Battery",
+      "category": "Electronics",
+      "price": 27990,
+      "currency": "INR",
+      "sku": "SONY-XM5",
+      "inventory": 65,
+      "image": "https://via.placeholder.com/300x300?text=Sony+XM5",
+      "rating": 4.6,
+      "reviews_count": 1850
+    },
+    {
+      "id": "prod_006",
+      "name": "iPad Pro 12.9\"",
+      "description": "M2 Chip, Liquid Retina XDR Display",
+      "category": "Electronics",
+      "price": 99999,
+      "currency": "INR",
+      "sku": "IPAD-PRO-129",
+      "inventory": 40,
+      "image": "https://via.placeholder.com/300x300?text=iPad+Pro",
+      "rating": 4.9,
+      "reviews_count": 1200
+    },
+    {
+      "id": "prod_007",
+      "name": "Kindle Paperwhite",
+      "description": "6.8\" E-ink, Waterproof, Warm Light",
+      "category": "Electronics",
+      "price": 14999,
+      "currency": "INR",
+      "sku": "KINDLE-PW",
+      "inventory": 300,
+      "image": "https://via.placeholder.com/300x300?text=Kindle",
+      "rating": 4.4,
+      "reviews_count": 2600
+    },
+    {
+      "id": "prod_008",
+      "name": "Google Pixel 8 Pro",
+      "description": "6.7\" OLED, Advanced AI Features, 50MP",
+      "category": "Electronics",
+      "price": 84999,
+      "currency": "INR",
+      "sku": "PIXEL-8-PRO",
+      "inventory": 75,
+      "image": "https://via.placeholder.com/300x300?text=Pixel+8+Pro",
+      "rating": 4.6,
+      "reviews_count": 1450
+    }
+  ]
+}
